@@ -1,0 +1,304 @@
+<CLIMITS>
+
+  SHRT_MIN	  short int	                 -32767 (-215+1) 
+  SHRT_MAX	  short int	                  32767 (215-1) 
+  USHRT_MAX	  unsigned short int	        65535 (216-1) 
+  INT_MIN	    int	                       -32767 (-215+1) 
+  INT_MAX	    int	                        32767 (215-1) 
+  UINT_MAX	  unsigned int	              65535 (216-1) 
+  LONG_MIN	  long int	                 -2147483647 (-231+1) 
+  LONG_MAX	  long int	                  2147483647 (231-1) 
+  ULONG_MAX	  unsigned long int           4294967295 (232-1) 
+  LLONG_MIN	  long long int	             -9223372036854775807 (-263+1) 
+  LLONG_MAX	  long long int	              9223372036854775807 (263-1) 
+  ULLONG_MAX	unsigned long long int	    18446744073709551615 (264-1) 
+
+COMPILE C++11
+
+g++ -std=c++11 -Wall -g fileName -o f
+
+PRINTING TO CONSOLE
+
+  fprintf(stderr, "%d\n", variableName);
+
+PRIMES
+
+   When finding primes, you only have to to up to square root of the number in the primes list
+
+NUMBER OF DIGITS IN INTEGER
+
+  floor(log10(number)) + 1
+
+NATURAL LOG AND LOGbase10
+
+  ln = log() - returns double
+  log10 = log10() - returns double
+
+PRIME FACTORIZING INTO k FACTORS
+
+  void primeFactor(int m, int x){
+      while(n%2 == 0){
+          if(v.size()==x) v[v.size()-1] *= 2;
+          else v.push_back(2);
+          n /= 2;
+      }
+      for(int i = 3; i<= sqrt(n); i+=2){
+          while(n%i == 0){
+              if(v.size()==x) v[v.size()-1] *= i;
+              else v.push_back(i);
+              n /= i;
+          }
+      }
+      if(n > 2){
+          if(v.size()==x) v[v.size()-1] *= n;
+          else v.push_back(n);
+      }
+  }
+
+SPLITTING STRINGS BY " "
+
+vector<string> splitString(string str){
+  string buf; // Have a buffer string
+  stringstream ss(str); // Insert the string into a stream
+  vector<string> tokens; // Create vector to hold our words
+  while (ss >> buf) tokens.push_back(buf);
+  return tokens;
+}
+
+GCD OF TWO NUMBERS
+
+  int gcd(int a, int b){
+    if (b==0) return a;
+    return gcd(b,a%b);
+  }
+
+LCM OF TWO NUMBERS
+
+  int lcm(int a, int b){
+    return b*a/gcd(a,b);
+  }
+
+ROTATE A MATRIX 90, 180, and 270 (in the or statement respectively)
+
+  for(int i = 0; i<n; ++i){
+    for(int k = 0; k<n; ++k){
+      j = N[i][k] || N[k][n-1-i] || N[n-1-i][n-1-k] || N[n-1-k][i];
+      printf("%d ", j);
+    }
+    printf("\n");
+  }
+
+USING REGEX AND string::find() AND string::substr() functions
+
+  int main(){
+    cin >> s >> a >> b; 
+    regex aa ((a)); // general expression with this specified word
+    regex bb ((b)); 
+    string run = s;
+    string res; 
+    size_t one = 1, two = 1; //use size_t for the find() function 
+    while(one != string::npos || two != string::npos){
+      one = run.find(a); 
+      two = run.find(b); 
+      if(one < two) {
+        res += regex_replace(run, aa, b, regex_constants::format_first_only).substr(0, one+a.size()); //substrings from beginning to end of found word
+        run = regex_replace(run, aa, b, regex_constants::format_first_only).substr(one+a.size()); //substrings from end of found word to end
+      }
+      else if(two < one) {
+        res += regex_replace(run, bb, a, regex_constants::format_first_only).substr(0, two+b.size()); //substrings from beginning to end of found word
+        run = regex_replace(run, bb, a, regex_constants::format_first_only).substr(two+b.size()); //substrings from end of found word to end
+      }
+    }
+    res += run; 
+    printf("%s\n", res.c_str()); 
+  }
+
+BITSETS
+
+	bitset<# of bits> b(number);
+	to an unsigned long = b.to_ulong();
+	to a signed int = (int)b.to_ulong();
+  bitset<32> mybit(-3);
+  int mybit_int = (int)(mybit.to_ulong());
+
+PERMUTATIONS of a string std in C++
+
+  #include <bits/stdc++.h>
+  using namespace std;
+  int n, j, x;
+  int main(){
+    string s;
+    cin >> s;
+    string::size_type sz;
+    n = stoi(s, &sz);
+    int res = pow(10,9);
+    do{
+      //printf("%s\n", s);
+      j = stoi(s, &sz);
+      if(j>n && j<res) res = j;
+    }while(next_permutation(s.begin(), s.end()));
+    if(res == pow(10,9)) printf("0\n");
+    else printf("%d\n", res);
+    return 0;
+  }
+
+CHAR TO INT IN C++
+   integerName = (int) charName-48;
+
+STD::string in C++
+   to read string in from a text or stdin: getline(std::cin, stringName) may have to use std::cin.ignore(); beforehand
+   to get a specific character: stringName.at(index)
+   to convert int to string string s = std::to_string(intName);
+   to convert double to string ostringstream strs;
+  				                     strs << doubleName;
+  				                     string stringName = strs.str();
+   to convert string to int intName = atoi(stringName.c_str()); 
+   to convert string to a double doubleName = atof(stringName.c_str()); 
+
+BINARY SEARCH TO FIND SOLUTION C++
+  
+  bool solve(){
+    double hi = 1, lo = 0, mid; 
+    for(int i = 0; i<100; ++i){
+        mid = lo + (hi-lo)/2; 
+        double r = eq(mid); 
+        if(fabs(r) < EPS){
+            res = mid; 
+            return true; 
+        }
+        else if(r > EPS) lo = mid; 
+        else hi = mid; 
+    }
+    return false; }
+
+ITERATE THROUGH A MAP C++
+
+  map<string, int>::iterator it;
+  for(it = symbolTable.begin(); it != symbolTable.end(); it++){}
+
+SORT VECTOR OF PAIRS BY SECOND FIELD C++
+
+  bool sortbysec(const pair<string,double> &a, const pair<string,double> &b){
+    if(a.second == b.second) return (a.first < b.first); //tested for string pairs
+    return (a.second < b.second);
+  }
+  
+  sort(v.begin(), v.end(), sortbysec);
+
+SORT VECTOR OF STRINGS IGNORECASE C++
+
+  bool sortbynocase(const string &a, const string &b){
+    for (size_t c = 0; c < a.size() and c < b.size(); c++) {
+      if (std::tolower(a[c]) == std::tolower(b[c])) continue;
+      if (std::tolower(a[c]) < std::tolower(b[c])) return true;
+      else return false;
+    }
+    return a.size() < b.size();
+  }
+
+DEALING WITH FALLING BLOCKS IN A LINE
+
+  #include <bits/stdc++.h>
+  using namespace std;
+
+  int n, c, k, j, t, res; vector<char> v; string s; string ss;
+
+  bool r; bool l;
+
+  int main(){
+  scanf("%d", &n);
+  v.resize(n);
+  for(int i = 0; i<n; ++i) scanf(" %c", &v[i]);
+  for(int i = 0; i<n; ++i){
+    if(v[i] == '.') j++;
+    else if(v[i] == 'L' && !r) j = 0;
+    else if(v[i] == 'R' && !r) {
+      res += j;
+      j = 0;
+      r = true;
+    }
+    else if(v[i] == 'L' && r){
+      if(j%2) res += 1;
+      j = 0;
+      r = false;
+    }
+  }
+  if(!r) res += j;
+  printf("%d\n", res);
+  return 0;
+  }
+
+BIGINTEGER IN JAVA
+   import java.math.BigInteger;
+   public class prob16java{
+      public static void main(String args[]){
+         BigInteger num = new BigInteger("1");
+         for(int i = 0; i<1000; ++i){
+            num = num.multiply(new BigInteger("2"));
+         }
+         BigInteger answer = new BigInteger("0");
+         BigInteger place = new BigInteger("0");
+         BigInteger m = new BigInteger("10");
+         BigInteger c = new BigInteger("0");
+         while(num.compareTo(BigInteger.ZERO) != 0){
+            place = num.mod(m);
+            num = num.divide(m);
+            answer = answer.add(place);
+         }
+            System.out.println(answer);
+      }
+   }
+
+MAP and DOUBLE SCANNER IN java
+
+   import java.util.*;
+   public class zoo{
+     public static void main(String[] args){
+       Scanner in1 = new Scanner(System.in);
+       Scanner in = new Scanner(System.in); //two Scanners for int and String.nextLine()
+       int n = in1.nextInt();
+       String s = "";
+       int c = 1;
+       while(n != 0){
+         Map<String, Integer> map = new HashMap<String, Integer>();
+         for(int i = 0; i<n; ++i){
+           s = in.nextLine();
+           String [] arr = s.split(" ");
+           s = arr[arr.length-1].toLowerCase();
+           if(!map.containsKey(s)) map.put(s, 1);
+           else map.put(s, map.get(s)+1);
+         }
+         System.out.println("List "+c+":");
+         Map<String, Integer> treeMap = new TreeMap<String, Integer>(map); // set values to alphabetical order
+         for (Map.Entry m: treeMap.entrySet()) { //iterate through the key-value pairs
+           System.out.println(m.getKey()+" | "+m.getValue());
+         }
+         c++;
+         n = in1.nextInt();
+       }
+     }
+   }
+
+SCANNER isLetter(string.charAt(index)) in.hasNextLine()
+
+  Scanner in = new Scanner(System.in);
+  String st = "";
+  while(in.hasNextLine()){
+    double sum = 0;
+    double c = 0;
+    st = in.nextLine();
+    String [] s = st.split(" ");
+    String n = "";
+    for(int i = 0; i<s.length; ++i){
+      if(!Character.isLetter(s[i].charAt(0))){
+        sum += Double.parseDouble(s[i]);
+        c++;
+        }
+      else{
+        n += s[i] + " ";
+      }
+    }
+    double d = sum/c;
+    System.out.println(d + " " + n);
+  }
+

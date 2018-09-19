@@ -47,10 +47,14 @@ void findJ(pair<int, int> p, int pos[], string vs){
     }
   }
   if(vs.size() == 3){
-    int n = 0; 
-    // might have duplicate values  
-    for(int i = 0; i<3; ++i) printf("%d ", pos[i]);
-    printf("\n"); 
+    int n = js[pos[0]].first; 
+    // might have duplicate values
+    if(pos[1] != pos[0])  
+      n += js[pos[1]].first;
+    if(pos[2] != pos[0] && pos[2] != pos[1])
+      n += js[pos[2]].first; 
+    //for(int i = 0; i<3; ++i) printf("%d ", pos[i]);
+    //printf("\n"); 
     if(n < res)
       res = n; 
     return;
@@ -71,9 +75,10 @@ int main(){
     scanf("%d", &js[i].first); 
     cin >> js[i].second; 
   }
+  int v[3] = {-1, -1, -1}; 
   for(int i = 0; i<js.size(); ++i){
     for(int k = 0; k<js[i].second.size(); ++k){
-      findJ(make_pair(i, k), (int[]){-1,-1,-1}, "");
+      findJ(make_pair(i, k), v, "");
     }
   }
   printf("%d\n", res==INF?-1:res);
