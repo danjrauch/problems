@@ -46,8 +46,8 @@ vector<int> split(string s){
 }
 
 void addEdge(int s, int d, int w){
-  graph[s].push_back(make_pair(d, w)); 
-  graph[d].push_back(make_pair(s, w)); 
+  graph[s].push_back(make_pair(d, w));
+  graph[d].push_back(make_pair(s, w));
   edges.push_back(make_pair(w, make_pair(s, d)));
 }
 
