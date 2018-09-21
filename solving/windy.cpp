@@ -24,8 +24,8 @@
 #include <iomanip>
 using namespace std;
 
-#define EPS 1e-9;
-#define pi acos(-1.0);
+#define EPS 1e-9
+#define pi acos(-1.0)
 
 struct point{
   double x, y;
@@ -50,7 +50,7 @@ vec toVec(point a, point b){
 }
 
 double cross(vec a, vec b){
-  return crosss(toVec(p, q), toVec(p, r)) > 0;
+  return a.x * b.y - a.y * b.x;
 }
 
 bool ccw(point p, point q, point r){
@@ -58,11 +58,74 @@ bool ccw(point p, point q, point r){
 }
 
 int n;
+vector<vector<pair<bool, pair<point, point> > > > graph;
+vector<point> res;
+vector<bool> visited;
+map<point, int> pToG;
+vector<point> v;
+string dir;
 
-
+void search(vector<bool> vis, vector<> segs, int pos, vector<point> r){
+  if(pos == dir.size()) { copy(r.begin(), r.end(), back_inserter(res)); return; }
+  point source = r[r.size()-2];
+  point inter = r[r.size()-1];
+  point dest;
+  int d = dir.at(pos)=='L'?0:1;
+  for(int i = 0; i<graph[sourcePos].size(); ++i){
+    inter = graph[sourcePos][i].second.first;
+    dest = graph[sourcePos][i].second.second;
+    bool interVis = vis[pToG[inter]];
+    bool destVis = vis[pToG[dest]];
+    if(graph[sourcePos][i].first == d && !interVis  && !destVis){
+      vis[pToG[inter]] = true; 
+      vis[pToG[dest]] = true;
+      pos++;
+      r.push_back(inter);
+      r.push_back(dest);
+      search(vis, pos, r);
+    }
+  }
+}
 
 int main(){
-  
-  return 0; 
+  scanf("%d", &n);
+  graph.resize(n);
+  v.resize(n);
+  visited.resize(n);
+  for(int i = 0; i<n; ++i){
+    scanf("%lf %lf", &v[i].x, &v[i].y);
+    pToG[v[i]] = i;
+  }
+  for(int i = 0; i<n; ++i){
+    for(int k = 0; k<n; ++k){
+      if(k == i) continue;
+      for(int j = 0; j<n; ++j){
+        if(j == i || j == k) continue;
+        if(ccw(v[i], v[k], v[j])){
+          graph[pToG[v[i]]].push_back(make_pair(0, make_pair(v[k], v[j])));
+        }else{
+          graph[pToG[v[i]]].push_back(make_pair(1, make_pair(v[k], v[j])));
+        }
+      }
+    }
+  }
+  //for(int i = 0; i<n; ++i){
+  //  printf("%d (%lf, %lf)\n", i, v[i].x, v[i].y);
+  //  for(int k = 0; k<graph[i].size(); ++k){
+  //    int d = graph[i][k].first;
+  //    point e = graph[i][k].second.first;
+  //    point f = graph[i][k].second.second;
+  //    printf("    %d -> (%lf, %lf) -> (%lf, %lf)\n", d, e.x, e.y, f.x, f.y);
+  //  }
+  //}
+  for(int i = 0; i<n; ++i){
+    vector<point> m; m.push_back(v[i]);
+    search(visited, 0, m);
+  }
+  for(int i = 0; i<res.size(); ++i){
+    printf("%d ", pToG[res[i]]+1);
+  }
+  printf("\n");
+  return 0;
 }
 
