@@ -41,10 +41,13 @@ int numSame(string s, string ss){
 }
 
 void search(int p, int mask, int c){
+  //printf("%d %d %d\n", p, mask, c); 
   if(mask == pow(2, n)-1) if(c < res){ res = c; return; }
   for(int i = 0; i<n; ++i){
-    if(!(mask & (1 << i))){
-      search(i, mask | (1<<i), c + graph[p][i].second);
+    if((mask & (1 << i)) == 0){
+      int weight = 0; 
+      for(int j = 0; j<graph[p].size(); ++j) if(graph[p][j].first==i) weight = graph[p][j].second; 
+      search(i, mask | (1<<i), c + weight);
     }
   }
 }
@@ -68,4 +71,3 @@ int main(){
   printf("%d\n", res); 
   return 0; 
 }
-
