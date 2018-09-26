@@ -145,6 +145,9 @@ PERMUTATIONS of a string std in C++
 CHAR TO INT IN C++
    integerName = (int) charName-48;
 
+INT TO CHAR IN C++
+   charName = integerName + '0';
+
 STD::string in C++
    to read string in from a text or stdin: getline(std::cin, stringName) may have to use std::cin.ignore(); beforehand
    to get a specific character: stringName.at(index)

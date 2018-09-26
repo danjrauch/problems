@@ -31,32 +31,21 @@ FILE *fp;
 set<int> datapoints;
 
 void writeDataPoint(){
-  bool go = false;
-  int p;
-  while(!go){
-    go = true;
-    p = 0;
-    for(int i = 0; i<17; ++i){
-      if(rand() % 2 == 1){
-        p = p | (1<<i); 
-      }
-    }
-    if(datapoints.count(p) > 0) go = false;
-  }
-  //printf("%d\n", p); 
-  fprintf(fp, "%d\n", p); 
-  datapoints.insert(p);
+  int p = rand() % 400;
+  int s = rand() % 400;
+  fprintf(fp, "%d %d\n", p, s); 
 }
 
 int main(){
   fp = fopen("bulk", "w+");
   srand(time(0)); 
   printf("How many data points? : "); 
-  scanf("%lld", &numdatapoints); 
+  scanf("%lld", &numdatapoints);
+  fprintf(fp, "%d %d\n", 200, 4);
   for(long long d = 0; d<numdatapoints; ++d){
     writeDataPoint(); 
   }
-  fprintf(fp, "%d\n", -1); 
+  fprintf(fp, "%d %d\n", 0, 0); 
   fclose(fp); 
   return 0; 
 }
