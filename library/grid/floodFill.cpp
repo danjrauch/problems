@@ -1,57 +1,46 @@
-/*Flood Fill*/
-
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
 
-int n, m, a, b, j; vector<vector<int> > vec;
+int dr[] = {1, 0, -1, 0};
+int dc[] = {0, 1, 0, -1}; 
 
-void floodFill(int u, int r, int tcol, int rcol){
-  pair<int, int> n = make_pair(u, r);
-  if(tcol == rcol) return;
-  if(vec[u][r] != tcol) return;
-  queue<pair<int,int> > q;
-  q.push(n);
-  while(!q.empty()){
-    pair<int, int> w = q.front(); 
-    pair<int, int> e = q.front();
-    q.pop();
-    while(w.second >= 0 && vec[w.first][w.second] == tcol){
-      vec[w.first][w.second] = rcol; 
-      if(w.first-1 >= 0 && vec[w.first-1][w.second] == tcol) q.push(make_pair(w.first-1, w.second));
-      if(w.first+1 < vec.size() && vec[w.first+1][w.second] == tcol) q.push(make_pair(w.first+1, w.second));
-      w.second--;
-    } 
-    while(e.second < vec[e.first].size() && vec[e.first][e.second] == tcol){
-      if(e.first-1 >= 0 && vec[e.first-1][e.second] == tcol) q.push(make_pair(e.first-1, e.second));
-      if(e.first+1 < vec.size() && vec[e.first+1][w.second] == tcol) q.push(make_pair(e.first+1, e.second));
-      e.second++;
-    } 
+int R, C; 
+
+vector<vector<char> > grid; 
+
+int numConnectedComponents; 
+
+bool floodfill(int r, int c, char c1, char c2){
+  if(r < 0 || r >=R || c < 0 || c >= C) return false; 
+  if(grid[r][c] < 97 || grid[r][c] > 122) return false; 
+  if(grid[r][c] != c1) return false; 
+  grid[r][c] = c2; 
+  for(int d = 0; d<4; d++){
+    floodfill(r+dr[d], c+dc[d], c1, c2); 
   }
+  return true; 
 }
 
 int main(){
-  srand(time(0));
-  int rows; int cols;
-  scanf("%d %d", &rows, &cols);
-  vec.resize(rows);
-  for(int i = 0; i<rows; ++i){
-    vec[i].resize(cols);
-    for(int k = 0; k<cols; ++k){
-      j = rand()%2; 
-      vec[i][k] = j;
-      printf("%d ", vec[i][k]);
+  int tests; 
+  scanf("%d", &tests); 
+  tests = 1; 
+  for(int i = 0; i<tests; ++i){
+    numConnectedComponents = 0; 
+    scanf("%d %d", &R, &C); 
+    grid.resize(R); 
+    for(int j = 0; j<R; ++j){
+      grid[j].resize(C); 
+      for(int k = 0; k<C; ++k){
+        scanf(" %c ", &grid[j][k]); 
+      }
     }
-    printf("\n");
-  }
-  printf("\n");
-  for(int i = 0; i<rows; ++i){
-    for(int k = 0; k<cols; ++k){
-      floodFill(i,k,1,2);
+    for(int j = 0; j<R; ++j){
+      for(int k = 0; k<C; ++k){
+        if(floodfill(j, k, grid[j][k], (char)(65+numConnectedComponents))) numConnectedComponents++; 
+      }
     }
+    printf("%d\n", numConnectedComponents); 
   }
-  for(int i = 0; i<rows; ++i){
-    for(int k = 0; k<cols; ++k) printf("%d ", vec[i][k]);
-    printf("\n");
-  }
-  return 0;
+  return 0; 
 }
