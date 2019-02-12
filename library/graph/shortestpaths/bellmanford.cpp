@@ -2,12 +2,12 @@
 using namespace std;
 #define INF 2147483647
 typedef vector<int> vi;
-typedef vector<vector<int> > vvi;
+typedef vector<vector<int>> vvi;
 typedef pair<int, int> pii;
 
 int n, v, e;
-vector<vector<pii> > graph; 
-vector<pair<int, pii> > edges; 
+vector<vector<pii>> graph; 
+vector<pair<int, pii>> edges; 
 
 vi dists; // used for all graphs simultaneously for bellmanford
 vi preds; // used for all graphs simultaneously for bellmanford
@@ -42,16 +42,12 @@ void relax(int u, int v, int w){
 
 bool bellmanford(vector<vector<pair<int, int> > > g, int s){
   initss(v, s); 
-  for(int i = 0; i<v-1; ++i){
-    for(int k = 0; k<e; ++k){
+  for(int i = 0; i<v-1; ++i)
+    for(int k = 0; k<e; ++k)
       relax(edges[k].second.first, edges[k].second.second, edges[k].first); 
-    }
-  }
-  for(int i = 0; i<e; ++i){
-    if(dists[edges[i].second.second] > dists[edges[i].second.first] + edges[i].first){
+  for(int i = 0; i<e; ++i)
+    if(dists[edges[i].second.second] > dists[edges[i].second.first] + edges[i].first)
       return false; 
-    }
-  }
   return true; 
 }
 
