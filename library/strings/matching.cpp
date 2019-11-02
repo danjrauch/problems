@@ -1,5 +1,5 @@
-// Matches a pattern string to a text string in O(n+m)
-// where n = length of pattern string, m = length of text string
+/* Matches a pattern string to a text string in O(n+m)
+ * where n = length of pattern string, m = length of text string */
 
 #include<bits/stdc++.h>
 using namespace std;
