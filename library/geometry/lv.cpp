@@ -49,18 +49,18 @@ struct point {
 
 struct point_3d {
   double x, y, z;
-  point_3d() { x = y = z = 0; }
-  point_3d(double _x, double _y, double _z) : x(_x), y(_y), z(_z) {}
-  bool operator < (point_3d b) const{
-    if (x == b.x){
-      if (y == b.y){
-        if (z == b.z) return true; else return (z < b.z);
-      }
+  point3D() { x = y = z = 0; }
+  point3D(double _x, double _y, double _z) : x(_x), y(_y), z(_z) {}
+  bool operator < (point3D b) const{
+    if(x == b.x)
+      if(y == b.y)
+        if(z == b.z) 
+          return true;
+        else 
+          return (z < b.z);
       else return (y < b.y);
-    }
-    else{
+    else
       return (x < b.x);
-    }
   }
   bool operator == (point_3d other) const{
     return x == other.x && y == other.y && z == other.z;

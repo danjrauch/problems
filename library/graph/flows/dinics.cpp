@@ -28,12 +28,12 @@ bool dinic_bfs() {
   dist[src] = 0;
   int qt = 0;
   q[qt++] = src;
-  for (int qh = 0; qh < qt; qh++) {
+  for(int qh = 0; qh < qt; qh++){
     int u = q[qh];
-    for (int j = 0; j < (int) g[u].size(); j++) {
+    for(int j = 0; j < (int) g[u].size(); j++){
       Edge &e = g[u][j];
       int v = e.to;
-      if (dist[v] < 0 && e.f < e.cap) {
+      if (dist[v] < 0 && e.f < e.cap){
         dist[v] = dist[u] + 1;
         q[qt++] = v;
       }
@@ -42,14 +42,14 @@ bool dinic_bfs() {
   return dist[dest] >= 0;
 }
 
-int dinic_dfs(int u, int f) {
-  if (u == dest)
+int dinic_dfs(int u, int f){
+  if(u == dest)
     return f;
-  for (int &i = work[u]; i < (int) g[u].size(); i++) {
+  for(int &i = work[u]; i < (int) g[u].size(); i++){
     Edge &e = g[u][i];
-    if (e.cap <= e.f) continue;
+    if(e.cap <= e.f) continue;
     int v = e.to;
-    if (dist[v] == dist[u] + 1) {
+    if(dist[v] == dist[u] + 1){
       int df = dinic_dfs(v, min(f, e.cap - e.f));
       if (df > 0) {
         e.f += df;
@@ -65,7 +65,7 @@ int maxFlow(int _src, int _dest) {
   src = _src;
   dest = _dest;
   int result = 0;
-  while (dinic_bfs()) {
+  while(dinic_bfs()) {
     fill(work, work + nodes, 0);
     while (int delta = dinic_dfs(src, INT_MAX))
       result += delta;

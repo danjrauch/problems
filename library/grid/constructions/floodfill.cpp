@@ -2,45 +2,44 @@
 using namespace std;
 
 int dr[] = {1, 0, -1, 0};
-int dc[] = {0, 1, 0, -1}; 
+int dc[] = {0, 1, 0, -1};
 
-int R, C; 
+int R, C;
 
-vector<vector<char> > grid; 
+vector<vector<char> > grid;
 
-int numConnectedComponents; 
+int numConnectedComponents;
 
 bool floodfill(int r, int c, char c1, char c2){
-  if(r < 0 || r >=R || c < 0 || c >= C) return false; 
-  if(grid[r][c] < 97 || grid[r][c] > 122) return false; 
-  if(grid[r][c] != c1) return false; 
-  grid[r][c] = c2; 
+  if(r < 0 || r >=R || c < 0 || c >= C) return false;
+  if(grid[r][c] < 97 || grid[r][c] > 122) return false;
+  if(grid[r][c] != c1) return false;
+  grid[r][c] = c2;
   for(int d = 0; d<4; d++){
-    floodfill(r+dr[d], c+dc[d], c1, c2); 
+    floodfill(r+dr[d], c+dc[d], c1, c2);
   }
-  return true; 
+  return true;
 }
 
 int main(){
-  int tests; 
-  scanf("%d", &tests); 
-  tests = 1; 
+  int tests;
+  scanf("%d", &tests);
+  tests = 1;
   for(int i = 0; i<tests; ++i){
-    numConnectedComponents = 0; 
-    scanf("%d %d", &R, &C); 
-    grid.resize(R); 
+    numConnectedComponents = 0;
+    scanf("%d %d", &R, &C);
+    grid.resize(R);
     for(int j = 0; j<R; ++j){
-      grid[j].resize(C); 
+      grid[j].resize(C);
       for(int k = 0; k<C; ++k){
-        scanf(" %c ", &grid[j][k]); 
+        scanf(" %c ", &grid[j][k]);
       }
     }
-    for(int j = 0; j<R; ++j){
-      for(int k = 0; k<C; ++k){
-        if(floodfill(j, k, grid[j][k], (char)(65+numConnectedComponents))) numConnectedComponents++; 
-      }
-    }
-    printf("%d\n", numConnectedComponents); 
+    for(int j = 0; j<R; ++j)
+      for(int k = 0; k<C; ++k)
+        if(floodfill(j, k, grid[j][k], (char)(65+numConnectedComponents)))
+          numConnectedComponents++;
+    printf("%d\n", numConnectedComponents);
   }
-  return 0; 
+  return 0;
 }
